@@ -17,11 +17,10 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-
-        if (Auth::check() && Auth::user()->role_id == 3) { // 3 = admin
+        if (Auth::check() && Auth::user()->role->name == 'admin') {
             return $next($request);
         }
 
-        abort(403, 'Accès refusé'); // bloque si pas admin
+        abort(403, 'Accès refusé');
     }
 }
