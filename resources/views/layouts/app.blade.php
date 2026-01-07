@@ -1,39 +1,46 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title', 'Data Center')</title>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-    <!-- Custom CSS -->
+    <!-- Your custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <script src="{{ asset('js/app.js') }}"></script>
 </head>
 
 <body>
-    <div class="min-h-screen">
-        @include('layouts.navigation') <!-- Navigation pur CSS/JS -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="{{ route('dashboard') }}">My Data Center</a>
+            </div>
 
-        <!-- Page Heading -->
-        @isset($header)
-        <header class="page-header">
-            {{ $header }}
-        </header>
-        @endisset
+            <ul class="nav-links">
+                <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
+            </ul>
 
-        <!-- Page Content -->
-        <main class="page-content">
-            {{ $slot }}
-        </main>
-    </div>
+            @auth
+            <div class="dropdown">
+                <button id="dropdownBtn">{{ Auth::user()->name }} ▼</button>
+                <div id="dropdownContent" class="dropdown-content">
+                    <a href="{{ route('profile.edit') }}">Profile</a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="logout-btn">Log Out</button>
+                    </form>
+                </div>
+            </div>
+            @endauth
+        </div>
+    </nav>
 
-    <!-- Custom JS -->
+    <main class="main-content">
+        @yield('content')
+    </main>
+
+    <!-- Your custom JS -->
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 

@@ -8,11 +8,11 @@ class ManagerController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard'); // Vue admin
+        return view('manager.dashboard'); // Correct view for manager
     }
 
-    public function users()
+    public function resources()
     {
-        return view('admin.users'); // Liste des utilisateurs
+        return view('manager.resources'); // Manager’s resource page
     }
 }

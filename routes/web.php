@@ -11,6 +11,9 @@ Route::get('/', function () {
     return view('welcome'); // Page accessible aux invités
 });
 
+// --- Auth routes (login/register/etc.) ---
+require __DIR__ . '/auth.php';
+
 // --- Dashboard utilisateur (interne) ---
 Route::middleware(['auth', 'isUser'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -34,6 +37,3 @@ Route::middleware(['auth', 'isManager'])->group(function () {
     Route::get('/manager/dashboard', [ManagerController::class, 'index'])->name('manager.dashboard');
     Route::get('/manager/resources', [ManagerController::class, 'resources'])->name('manager.resources');
 });
-
-// Auth routes (login/register)
-require __DIR__ . '/auth.php';
