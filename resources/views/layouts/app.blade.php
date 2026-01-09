@@ -11,36 +11,12 @@
 </head>
 
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <a href="{{ route('dashboard') }}">My Data Center</a>
-            </div>
-
-            <ul class="nav-links">
-                <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            </ul>
-
-            @auth
-            <div class="dropdown">
-                <button id="dropdownBtn">{{ Auth::user()->name }} ▼</button>
-                <div id="dropdownContent" class="dropdown-content">
-                    <a href="{{ route('profile.edit') }}">Profile</a>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="logout-btn">Log Out</button>
-                    </form>
-                </div>
-            </div>
-            @endauth
-        </div>
-    </nav>
-
+    @include('layouts.navigation')
     <main class="main-content">
         @yield('content')
     </main>
 
-    <!-- Your custom JS -->
+    
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 

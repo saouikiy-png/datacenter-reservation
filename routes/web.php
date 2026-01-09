@@ -8,7 +8,14 @@ use Illuminate\Support\Facades\Route;
 
 // --- Routes publiques ---
 Route::get('/', function () {
-    return view('welcome'); // Page accessible aux invités
+    return view('welcome');
+});
+
+
+// PROTECTED ROUTES (Requires Login)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // ... admin/manager routes
 });
 
 // --- Auth routes (login/register/etc.) ---

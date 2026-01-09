@@ -1,6 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>Welcome</h1>
-<p>Please log in or register to access more features.</p>
+<div class="home-hero-section">
+  <div class="home-content-overlay">
+    <h1 class="hello">Hello, this is our DATA CENTER</h1>
+
+    <div class="home-search-container">
+      <input type="text" placeholder="Search..." class="home-search-bar">
+      <button class="search-btn"></button>
+    </div>
+  </div>
+</div>
 @endsection
