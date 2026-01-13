@@ -1,11 +1,28 @@
 <nav class="navbar">
     <div class="container">
-        <div class="logo">
-            <a href="{{ route('dashboard') }}">Data Center</a>
-        </div>
+
 
         <ul class="nav-links">
-            <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
+            <li>
+                @guest
+            <li><a href="/">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="{{ route('login') }}">Login</a></li>
+            <li><a href="{{ route('register') }}">Request Account</a></li>
+            <li><a href="#">Our Resources</a></li>
+
+            @else
+            @if(auth()->user()->role->name === 'user')
+            <a href="{{ route('dashboard') }}">Dashboard</a>
+
+            @elseif(auth()->user()->role->name === 'manager')
+            <a href="{{ route('manager.dashboard') }}">Dashboard</a>
+
+            @elseif(auth()->user()->role->name === 'admin')
+            <a href="{{ route('admin.dashboard') }}">Dashboard</a>
+            @endif
+            @endguest
+            </li>
         </ul>
 
         @auth
@@ -22,22 +39,3 @@
         @endauth
     </div>
 </nav>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const dropdownBtn = document.getElementById('dropdownBtn');
-        const dropdownContent = document.getElementById('dropdownContent');
-
-        if (dropdownBtn) {
-            dropdownBtn.addEventListener('click', () => {
-                dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
-            });
-
-            document.addEventListener('click', e => {
-                if (!dropdownBtn.contains(e.target) && !dropdownContent.contains(e.target)) {
-                    dropdownContent.style.display = 'none';
-                }
-            });
-        }
-    });
-</script>
