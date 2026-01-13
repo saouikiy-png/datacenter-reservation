@@ -8,6 +8,6 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('dashboard'); // Vue pour l'utilisateur interne
+        return view('dashboard.admin'); // Vue pour l'utilisateur interne
     }
 }

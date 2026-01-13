@@ -308,3 +308,43 @@ body {
   font-size: 1.1rem;
   background: white;
 }
+
+
+:root {
+    --primary-teal: #00bfa5;
+    --hover-teal: #02776b;
+    --bg-light: #f0fdfa;
+    --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.admin-users {
+    font-family: sans-serif;
+}
+
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: var(--card-shadow);
+}
+
+.users-table th {
+    background: var(--primary-teal);
+    color: white;
+    padding: 12px;
+}
+
+.users-table td {
+    padding: 10px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.status-active {
+    color: var(--primary-teal);
+    font-weight: bold;
+}
+
+.status-disabled {
+    color: #dc2626;
+    font-weight: bold;
+}

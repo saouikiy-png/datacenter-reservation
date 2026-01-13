@@ -5,6 +5,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ManagerController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\IncidentController;
+use App\Http\Controllers\LogController;
 
 // --- Routes publiques ---
 Route::get('/', function () {
@@ -43,4 +46,20 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 Route::middleware(['auth', 'isManager'])->group(function () {
     Route::get('/manager/dashboard', [ManagerController::class, 'index'])->name('manager.dashboard');
     Route::get('/manager/resources', [ManagerController::class, 'resources'])->name('manager.resources');
+});
+
+// --- Notifications M ---
+Route::get('/notifications', [NotificationController::class, 'index']);
+
+// --- Incidents M ---
+Route::get('/incidents', [IncidentController::class, 'index']);
+
+// --- logs M ---
+Route::get('/logs', [LogController::class, 'index']);
+
+use App\Http\Controllers\Admin\UserController;
+
+Route::middleware(['auth'])->prefix('admin')->group(function () {
+    Route::get('/users', [UserController::class, 'index'])
+        ->name('admin.users.index');
 });
