@@ -8,14 +8,14 @@
 
 body {
   font-family: Arial, sans-serif;
+  background-color: var(--bg-light);
+  min-height: 100vh;
 }
 
 .navbar {
   background-color: #fff;
   border-bottom: 1px solid #ccc;
   position: relative;
-
-
 }
 
 .hello {
@@ -125,7 +125,6 @@ body {
 .dropdown-content button:hover {
   background-color: #f0f0f0;
 }
-
 /* --- Hamburger --- */
 .hamburger {
   display: none;
@@ -168,9 +167,9 @@ body {
 /* --- SHARED COLORS & THEME --- */
 :root {
   --primary-teal: #00bfa5;
-  --hover-teal: #00897b;
+  --hover-teal: #02776b;
   --bg-light: #f0fdfa;
-  /* The light teal background from your image */
+  /* The light teal background  */
   --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
