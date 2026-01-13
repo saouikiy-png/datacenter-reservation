@@ -37,3 +37,13 @@ Route::middleware(['auth', 'isManager'])->group(function () {
     Route::get('/manager/dashboard', [ManagerController::class, 'index'])->name('manager.dashboard');
     Route::get('/manager/resources', [ManagerController::class, 'resources'])->name('manager.resources');
 });
+
+
+//ikram
+use App\Http\Controllers\ReservationController;
+
+
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::post('/reservation', [ReservationController::class, 'store']);

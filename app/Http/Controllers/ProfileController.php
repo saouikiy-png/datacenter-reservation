@@ -57,4 +57,24 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+
+    /**
+     * Display profile according to role.
+     */
+    public function index(): View
+    {
+        $user = Auth::user();
+
+        if ($user->role === 'admin') {
+            return view('admin.profile', compact('user'));
+        }
+
+        if ($user->role === 'manager') {
+            return view('manager.profile', compact('user'));
+        }
+
+        return view('user.profile', data: compact('user'));
+    }
+
 }
