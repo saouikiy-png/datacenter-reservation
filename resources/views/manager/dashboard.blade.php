@@ -11,7 +11,7 @@
   </ul>
   <div class="dropdown">
     <button class="dropdown-btn">
-      Test Admin ▼
+      ▼
     </button>
 
     <nav class="dropdown-menu">

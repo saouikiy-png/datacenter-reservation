@@ -8,14 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 // --- Routes publiques ---
 Route::get('/', function () {
-    return view('welcome');
-});
-
-
-// PROTECTED ROUTES (Requires Login)
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    // ... admin/manager routes
+    return view('welcome'); // Page accessible aux invités
 });
 
 // --- Auth routes (login/register/etc.) ---
@@ -49,8 +42,21 @@ Route::middleware(['auth', 'isManager'])->group(function () {
 //ikram
 use App\Http\Controllers\ReservationController;
 
-
+// Page d'accueil (ou liste des ressources)
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome'); // Ou redirect vers page ressources si tu as une page dédiée
 });
-Route::post('/reservation', [ReservationController::class, 'store']);
+
+// Afficher le formulaire de réservation pour une ressource
+Route::get('/reservation/create', [ReservationController::class, 'create'])
+    ->name('reservation.create');
+
+// Enregistrer la réservation
+Route::post('/reservation/store', [ReservationController::class, 'store'])
+    ->name('reservation.store');
+
+
+//ikram-profile
+Route::get('/profile', [ProfileController::class, 'index'])
+    ->middleware('auth')
+    ->name('profile');     //ça te permet de l’appeler facilement dans Blade 

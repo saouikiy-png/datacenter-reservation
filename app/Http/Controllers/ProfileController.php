@@ -74,7 +74,7 @@ class ProfileController extends Controller
             return view('manager.profile', compact('user'));
         }
 
-        return view('user.profile', data: compact('user'));
+        return view('user.profile', compact('user'));
     }
 
 }
