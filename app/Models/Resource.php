@@ -7,19 +7,25 @@ use Illuminate\Database\Eloquent\Model;
 class Resource extends Model
 {
     protected $fillable = [
-        'name','category_id','responsable_id',
-        'cpu','ram','storage','os','location','status'
+        'name',
+        'category_id',
+        'cpu',
+        'ram',
+        'storage',
+        'bandwidth',
+        'os',
+        'location',
+        'status'
     ];
 
-    public function category() {
+    public function category()
+    {
         return $this->belongsTo(ResourceCategory::class);
     }
 
-    public function responsable() {
-        return $this->belongsTo(User::class, 'responsable_id');
-    }
-
-    public function maintenances() {
+    public function maintenances()
+    {
         return $this->hasMany(Maintenance::class);
     }
 }
+

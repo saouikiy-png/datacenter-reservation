@@ -5,7 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ManagerController;
 use Illuminate\Support\Facades\Route;
-git add routes/web.phpuse App\Http\Controllers\ResourceController;
+use App\Http\Controllers\ResourceController;
 
 // --- Routes publiques ---
 Route::get('/', function () {
@@ -45,3 +45,6 @@ Route::middleware(['auth', 'isManager'])->group(function () {
     Route::get('/manager/dashboard', [ManagerController::class, 'index'])->name('manager.dashboard');
     Route::get('/manager/resources', [ManagerController::class, 'resources'])->name('manager.resources');
 });
+// --- Ressource---
+Route::get('/resources', [ResourceController::class, 'index']);
+Route::get('/resources/{resource}', [ResourceController::class, 'show']);

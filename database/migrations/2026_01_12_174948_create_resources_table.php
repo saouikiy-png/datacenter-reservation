@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('resources', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('category_id')->constrained('resource_categories');
-            $table->foreignId('responsable_id')->constrained('users');
+            $table->foreignId('category_id')->constrained('resource_categories')->onDelete('cascade');
             $table->integer('cpu')->nullable();
             $table->integer('ram')->nullable();
             $table->integer('storage')->nullable();
+            $table->integer('bandwidth')->nullable();
             $table->string('os')->nullable();
             $table->string('location')->nullable();
             $table->enum('status', ['available', 'maintenance', 'disabled'])->default('available');

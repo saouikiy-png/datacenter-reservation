@@ -3,41 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Resource;
+use App\Models\ResourceCategory;
 
 class ResourceController extends Controller
 {
-    public function index()   // liste + filtres
-    {
-        //
-    }
+    public function index()
+{
+    $categories = ResourceCategory::with('resources')->get();
+    return view('resources', compact('categories'));
+}
 
-    public function create()  // formulaire
+    public function show(Resource $resource)
     {
-        //
-    }
-
-    public function store(Request $request)   // ajout
-    {
-        //
-    }
-
-    public function show($id)    // fiche détaillée
-    {
-        //
-    }
-
-    public function edit($id)    // modifier
-    {
-        //
-    }
-
-    public function update(Request $request, $id)  // mise à jour
-    {
-        //
-    }
-
-    public function destroy($id) // désactiver
-    {
-        //
+        return view('resources.show', compact('resource'));
     }
 }

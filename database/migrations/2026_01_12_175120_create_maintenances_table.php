@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('maintenances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('resource_id')->constrained();
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
-            $table->text('reason')->nullable();
+            $table->foreignId('resource_id')->constrained()->cascadeOnDelete();
+            $table->text('description')->nullable();
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
+            $table->enum('status', ['planned', 'ongoing', 'completed'])->default('planned');
             $table->timestamps();
-        });
+});
     }
 
     /**
