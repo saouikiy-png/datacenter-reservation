@@ -46,5 +46,4 @@ Route::middleware(['auth', 'isManager'])->group(function () {
     Route::get('/manager/resources', [ManagerController::class, 'resources'])->name('manager.resources');
 });
 // --- Ressource---
-Route::get('/resources', [ResourceController::class, 'index']);
-Route::get('/resources/{resource}', [ResourceController::class, 'show']);
+Route::resource('resources', ResourceController::class);
