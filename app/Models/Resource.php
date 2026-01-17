@@ -20,12 +20,6 @@ class Resource extends Model
 
     public function category()
     {
-        return $this->belongsTo(ResourceCategory::class);
-    }
-
-    public function maintenances()
-    {
-        return $this->hasMany(Maintenance::class);
+        return $this->belongsTo(ResourceCategory::class, 'category_id');
     }
 }
-

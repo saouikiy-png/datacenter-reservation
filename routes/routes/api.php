@@ -1,13 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\Resource;
-use App\Models\ResourceCategory;
+use App\Http\Controllers\ResourceController;
 
-Route::get('/categories/{category}/resources', function ($categoryId) {
-    return Resource::where('category_id', $categoryId)->get();
+Route::get('/categories/{id}/products', function ($id) {
+    return \App\Models\Resource::where('category_id', $id)->get();
 });
 
-Route::get('/resources/{resource}', function ($id) {
-    return Resource::find($id);
-});
+

@@ -7,6 +7,7 @@ use App\Http\Controllers\ManagerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ResourceController;
 
+
 // --- Routes publiques ---
 Route::get('/', function () {
     return view('welcome');
@@ -45,5 +46,11 @@ Route::middleware(['auth', 'isManager'])->group(function () {
     Route::get('/manager/dashboard', [ManagerController::class, 'index'])->name('manager.dashboard');
     Route::get('/manager/resources', [ManagerController::class, 'resources'])->name('manager.resources');
 });
-// --- Ressource---
-Route::resource('resources', ResourceController::class);
+
+// Page manager
+Route::get('/manager/resources', [ResourceController::class, 'index'])
+    ->name('resources.index');
+
+// AJAX
+Route::get('/resources/category/{id}', [ResourceController::class, 'getProducts'])
+    ->name('resources.byCategory');

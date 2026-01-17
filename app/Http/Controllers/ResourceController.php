@@ -9,11 +9,11 @@ use App\Models\ResourceCategory;
 class ResourceController extends Controller
 {
     // Liste toutes les catégories avec leurs ressources
-    public function index()
-    {
-        $categories = ResourceCategory::with('resources')->get();
-        return view('resources.index', compact('categories'));
-    }
+   public function index()
+{
+    $categories = ResourceCategory::all();
+    return view('manager.resources', compact('categories'));
+}
 
     // Formulaire de création
     public function create()
@@ -79,4 +79,12 @@ class ResourceController extends Controller
         $resource->delete();
         return redirect()->route('resources.index')->with('success', 'Resource deleted successfully');
     }
+    public function getProducts($id)
+{
+    // On récupère les ressources liées à l'ID de la catégorie
+    $resources = \App\Models\Resource::where('category_id', $id)->get();
+
+    // On renvoie une réponse JSON
+    return response()->json($resources);
+}
 }
