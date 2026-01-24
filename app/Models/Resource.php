@@ -22,4 +22,14 @@ class Resource extends Model
     {
         return $this->belongsTo(ResourceCategory::class, 'category_id');
     }
+
+    public function maintenances()
+    {
+        return $this->hasMany(Maintenance::class);
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }

@@ -52,5 +52,13 @@ Route::get('/resources/category/{id}', [ResourceController::class, 'getProducts'
 
 Route::middleware(['auth', 'isManager'])->group(function () {
     Route::get('/manager/dashboard', [ManagerController::class, 'index'])->name('manager.dashboard');
-    Route::get('/manager/resources', [ResourceController::class, 'index'])->name('manager.resources');
+
+    
+    // Maintenance Routes
+    Route::post('/manager/maintenance', [ManagerController::class, 'storeMaintenance'])->name('manager.maintenance.store');
+    Route::patch('/manager/maintenance/{id}/complete', [ManagerController::class, 'markAsCompleted'])->name('manager.maintenance.complete');
+
+    // Reservation Routes
+    Route::patch('/manager/reservation/{id}/approve', [ManagerController::class, 'approveReservation'])->name('manager.reservation.approve');
+    Route::patch('/manager/reservation/{id}/reject', [ManagerController::class, 'rejectReservation'])->name('manager.reservation.reject');
 });
