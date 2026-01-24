@@ -1,5 +1,27 @@
 <x-guest-layout>
 
+    <style>
+        .register-page-wrapper {
+            background-image: url("{{ asset('images/llginM.png') }}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .register-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 500px;
+        }
+    </style>
+
     <div class="register-page-wrapper">
         <div class="register-card">
             <div class="register-header">

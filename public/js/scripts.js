@@ -7,28 +7,38 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function loadResources(categoryId) {
-    const list = document.getElementById(`products-${categoryId}`);
+    const tbody = document.getElementById(`products-${categoryId}`);
 
-    if (list.innerHTML !== "") {
-        list.innerHTML = "";
+    if (tbody.innerHTML !== "") {
+        tbody.innerHTML = "";
         return;
     }
 
     fetch(`/resources/category/${categoryId}`)
-        .then(response => response.json())
+        .then(res => res.json())
         .then(data => {
-            list.innerHTML = "";
+            tbody.innerHTML = "";
 
             if (data.length === 0) {
-                list.innerHTML = "<li>Aucune ressource</li>";
+                tbody.innerHTML =
+                    `<tr><td colspan="5">Aucune ressource</td></tr>`;
                 return;
             }
 
             data.forEach(resource => {
-                const li = document.createElement("li");
-                li.textContent = resource.name;
-                li.addEventListener("click", () => showCard(resource));
-                list.appendChild(li);
+                const tr = document.createElement("tr");
+                tr.classList.add("resource-row");
+
+                tr.innerHTML = `
+                    <td>${resource.name}</td>
+                    <td>${resource.cpu ?? "-"}</td>
+                    <td>${resource.ram ?? "-"}</td>
+                    <td>${resource.storage ?? "-"}</td>
+                    <td>${resource.status}</td>
+                `;
+
+                tr.addEventListener("click", () => showCard(resource));
+                tbody.appendChild(tr);
             });
         });
 }
@@ -47,5 +57,6 @@ function showCard(r) {
 }
 
 function closeCard() {
-    document.getElementById("resource-card").classList.add("hidden");
+    document.getElementById("resource-card")
+        .classList.add("hidden");
 }

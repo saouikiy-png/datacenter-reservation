@@ -12,24 +12,47 @@
     <p>our data resources</p>
 </header>
 
-<main class="grid">
-    @foreach($categories as $category)
-        <section class="column">
-            <div class="column-title category-item"
-                 data-category-id="{{ $category->id }}">
-                {{ $category->name }}
-                <span>▼</span>
-            </div>
+<main class="resources-container">
 
-            <ul class="resource-list"
-                id="products-{{ $category->id }}">
-            </ul>
-        </section>
-    @endforeach
+@foreach($categories as $category)
+    <section class="resource-column">
+
+        <div class="column-header category-item" data-category-id="{{ $category->id }}">
+            {{ $category->name }}
+            <span>▼</span>
+        </div>
+
+        <table class="resource-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>CPU</th>
+                    <th>RAM</th>
+                    <th>Storage</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach($category->resources as $resource)
+                    <tr>
+                        <td>{{ $resource->name }}</td>
+                        <td>{{ $resource->cpu }}</td>
+                        <td>{{ $resource->ram }}</td>
+                        <td>{{ $resource->storage }}</td>
+                        <td>{{ $resource->status }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+    </section>
+@endforeach
+
 </main>
 
-<!-- Card détail -->
-<div id="resource-card" class="card hidden">
+<!-- FICHE DÉTAIL -->
+<div id="resource-card" class="resource-card hidden">
     <div class="card-header">
         <h3 id="r-name"></h3>
         <span class="close" onclick="closeCard()">✖</span>
@@ -45,6 +68,7 @@
     </ul>
 </div>
 
-<script src="{{ asset('js/resources.js') }}"></script>
 </body>
 </html>
+
+

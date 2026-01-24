@@ -8,12 +8,13 @@ use App\Models\ResourceCategory;
 
 class ResourceController extends Controller
 {
+
     // Liste toutes les catégories avec leurs ressources
-   public function index()
-{
-    $categories = ResourceCategory::all();
-    return view('manager.resources', compact('categories'));
-}
+    public function index()
+    {
+        $categories = ResourceCategory::all();
+        return view('manager.resources', compact('categories'));
+    }
 
     // Formulaire de création
     public function create()
@@ -38,7 +39,8 @@ class ResourceController extends Controller
 
         Resource::create($request->all());
 
-        return redirect()->route('resources.index')->with('success', 'Resource added successfully');
+        return redirect()->route('resources.index')
+            ->with('success', 'Resource added successfully');
     }
 
     // Fiche détaillée d'une ressource
@@ -70,21 +72,23 @@ class ResourceController extends Controller
 
         $resource->update($request->all());
 
-        return redirect()->route('resources.index')->with('success', 'Resource updated successfully');
+        return redirect()->route('resources.index')
+            ->with('success', 'Resource updated successfully');
     }
 
     // Supprimer ou désactiver une ressource
     public function destroy(Resource $resource)
     {
         $resource->delete();
-        return redirect()->route('resources.index')->with('success', 'Resource deleted successfully');
+        return redirect()->route('resources.index')
+            ->with('success', 'Resource deleted successfully');
     }
-    public function getProducts($id)
-{
-    // On récupère les ressources liées à l'ID de la catégorie
-    $resources = \App\Models\Resource::where('category_id', $id)->get();
 
-    // On renvoie une réponse JSON
-    return response()->json($resources);
-}
+    public function getProducts($id)
+    {
+        // On récupère les ressources liées à l'ID de la catégorie
+        $resources = \App\Models\Resource::where('category_id', $id)->get();
+        // On renvoie une réponse JSON
+        return response()->json($resources);
+    }
 }

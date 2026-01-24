@@ -9,7 +9,7 @@
 
                 <!-- PUBLIC RESOURCES -->
                 <li><a href="{{ route('resources.index') }}">Our Resources</a></li>
-            @else
+                @else
 
                 @if(auth()->user()->role->name === 'user')
                     <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
