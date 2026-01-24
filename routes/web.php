@@ -51,6 +51,6 @@ Route::get('/resources/category/{id}', [ResourceController::class, 'getProducts'
     ->name('resources.byCategory');
 
 Route::middleware(['auth', 'isManager'])->group(function () {
-    Route::get('/manager/resources', [ResourceController::class, 'index'])
-        ->name('manager.resources');
+    Route::get('/manager/dashboard', [ManagerController::class, 'index'])->name('manager.dashboard');
+    Route::get('/manager/resources', [ResourceController::class, 'index'])->name('manager.resources');
 });
