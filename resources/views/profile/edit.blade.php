@@ -91,7 +91,7 @@
 <div class="profile-page-container">
     
     <div class="profile-header">
-        <h1 class="profile-title">Profile Manager</h1>
+        <h1 class="profile-title">My Profile</h1>
         <p style="opacity: 0.9; margin-top: 5px;">Manage your account settings</p>
     </div>
 

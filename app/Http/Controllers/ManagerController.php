@@ -48,15 +48,15 @@ class ManagerController extends Controller
         $request->validate([
             'resource_id' => 'required|exists:resources,id',
             'description' => 'nullable|string',
-            'start_date' => 'required|date',
-            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'reservation_date' => 'required|date',
+            'return_date' => 'nullable|date|after_or_equal:reservation_date',
         ]);
 
         Maintenance::create([
             'resource_id' => $request->resource_id,
             'description' => $request->description,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
+            'reservation_date' => $request->reservation_date,
+            'return_date' => $request->return_date,
             'status' => 'planned' // or 'ongoing' depending on need, default is planned
         ]);
 
@@ -70,7 +70,7 @@ class ManagerController extends Controller
     public function markAsCompleted($id)
     {
         $maintenance = Maintenance::findOrFail($id);
-        $maintenance->update(['status' => 'completed', 'end_date' => now()]);
+        $maintenance->update(['status' => 'completed', 'return_date' => now()]);
 
         // Restore resource status
         $maintenance->resource->update(['status' => 'available']);

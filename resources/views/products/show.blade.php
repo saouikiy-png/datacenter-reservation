@@ -136,6 +136,8 @@
         font-weight: 700;
         font-size: 1rem;
         cursor: pointer;
+        text-align: center;
+        text-decoration: none;
         transition: background-color 0.2s;
     }
     .btn-reserve:hover { background-color: #3D2B6C; }
@@ -258,7 +260,7 @@
 
             <div class="actions">
                 <a href="{{ route('resources.index') }}" class="btn-back">Back</a>
-                <button class="btn-reserve" onclick="alert('Reservation logic here')">Reserve Now</button>
+                <a href="{{ route('reservation.create', ['resource_id' => $resource->id]) }}" class="btn-reserve">Reserve Now</a>
             </div>
         </div>
 

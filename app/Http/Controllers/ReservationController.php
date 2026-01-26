@@ -17,7 +17,7 @@ class ReservationController extends Controller
         // Dates déjà réservées pour cette ressource
         $existingReservations = Reservation::where('resource_id', $resource_id)
             ->where('status', '!=', 'refusee')
-            ->get(['start_date', 'end_date']);
+            ->get(['reservation_date', 'return_date']);
 
         return view('reservation.create', compact('resource', 'existingReservations'));
     }
@@ -45,7 +45,7 @@ class ReservationController extends Controller
             })->exists();
 
         if ($conflict) {
-            return back()->withErrors(['date' => 'This resource is already reserved for the selected dates.'])->withInput();
+            return back()->withErrors(['date' => 'This resource is already reserved during this period.'])->withInput();
         }
 
         Reservation::create([

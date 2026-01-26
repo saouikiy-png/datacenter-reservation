@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('resource_id')->constrained()->cascadeOnDelete();
             $table->text('description')->nullable();
-            $table->date('start_date');
-            $table->date('end_date')->nullable();
+            $table->date('reservation_date');
+            $table->date('return_date')->nullable();
             $table->enum('status', ['planned', 'ongoing', 'completed'])->default('planned');
             $table->timestamps();
 });

@@ -9,8 +9,8 @@ class Maintenance extends Model
     protected $fillable = [
         'resource_id',
         'description',
-        'start_date',
-        'end_date',
+        'reservation_date',
+        'return_date',
         'status'
     ];
 

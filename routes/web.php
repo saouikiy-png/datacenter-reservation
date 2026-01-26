@@ -77,7 +77,4 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-//ikram-profile
-Route::get('/profile', [ProfileController::class, 'index'])
-    ->middleware('auth')
-    ->name('profile');     //ça te permet de l’appeler facilement dans Blade 
+

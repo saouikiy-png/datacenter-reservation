@@ -66,11 +66,11 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->role === 'admin') {
+        if ($user->role->name === 'admin') {
             return view('admin.profile', compact('user'));
         }
 
-        if ($user->role === 'manager') {
+        if ($user->role->name === 'manager') {
             return view('manager.profile', compact('user'));
         }
 

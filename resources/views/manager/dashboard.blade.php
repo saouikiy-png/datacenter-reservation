@@ -3,28 +3,6 @@
 @section('title', 'Manager Dashboard')
 
 @section('content')
-<<<<<<< HEAD
-  <h1>Manager Dashboard</h1>
-  <p>Welcome, {{ Auth::user()->name }}! Here you can view and manage your assigned resources.</p>
-
-  <ul>
-    <li><a href="{{ route('manager.resources') }}">View Resources</a></li>
-  </ul>
-  <div class="dropdown">
-    <button class="dropdown-btn">
-      ▼
-    </button>
-
-    <nav class="dropdown-menu">
-      <ul>
-        <li><a href="{{ route('profile') }}">Profile</a></li>
-        <li><a href="{{ route('logout') }}">Log out</a></li>
-      </ul>
-    </nav>
-  </div>
-
-@endsection
-=======
 <style>
     /* Shared Styling mimicking products/index.blade.php */
     .dashboard-container {
@@ -280,8 +258,8 @@
                                     <td>{{ $reservation->resource->name }}</td>
                                     <td>
                                         <div style="font-size: 0.9em;">
-                                            Start: <b>{{ $reservation->start_date }}</b><br>
-                                            End: <b>{{ $reservation->end_date }}</b>
+                                            From: <b>{{ $reservation->reservation_date }}</b><br>
+                                            To: <b>{{ $reservation->return_date }}</b>
                                         </div>
                                     </td>
                                     <td style="text-align: right;">
@@ -411,13 +389,13 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="form-label">Start Date</label>
-                                <input type="date" name="start_date" class="form-control" required>
+                                <label class="form-label">Reservation Date</label>
+                                <input type="date" name="reservation_date" class="form-control" required>
                             </div>
 
                             <div class="form-group">
-                                <label class="form-label">End Date (Optional)</label>
-                                <input type="date" name="end_date" class="form-control">
+                                <label class="form-label">Return Date (Optional)</label>
+                                <input type="date" name="return_date" class="form-control">
                             </div>
 
                             <button type="submit" class="btn-submit">Schedule Maintenance</button>
@@ -447,4 +425,3 @@
     }
 </script>
 @endsection
->>>>>>> origin/ressources
