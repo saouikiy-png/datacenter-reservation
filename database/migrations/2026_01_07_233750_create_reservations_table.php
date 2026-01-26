@@ -5,50 +5,49 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
 
-            // Link to Personne 1 (users)
+            // Link to the user
             $table->foreignId('user_id')
                 ->constrained('users')
                 ->onDelete('cascade');
 
-            $table->unsignedBigInteger('resource_id');
+            // Link to the resource
+            $table->foreignId('resource_id')
+                ->constrained('resources')
+                ->onDelete('cascade');
 
             // Reservation period
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
+            // start_date = reservation date
+            // end_date = resource return date
+            $table->dateTime('reservation_date');
+            $table->dateTime('return_date');
 
             // User justification
             $table->text('justification');
 
-            // Reservation workflow status
+            // Reservation status
             $table->enum('status', [
-                'en_attente',
-                'approuvee',
-                'refusee',
+                'pending',
+                'approved',
+                'rejected',
                 'active',
-                'terminee'
-            ])->default('en_attente');
+                'completed'
+            ])->default('pending');
 
-            // Manager comment 
+            // Manager comment
             $table->text('manager_comment')->nullable();
 
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('reservations');
     }
 };
-
+?>

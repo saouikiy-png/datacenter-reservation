@@ -54,7 +54,10 @@ Route::get('/reservation/create', [ReservationController::class, 'create'])
 // Enregistrer la réservation
 Route::post('/reservation/store', [ReservationController::class, 'store'])
     ->name('reservation.store');
-
+//route au dashboard
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 //ikram-profile
 Route::get('/profile', [ProfileController::class, 'index'])
