@@ -1,8 +1,29 @@
 <x-guest-layout>
 
+    <style>
+        .login-page-wrapper {
+            background-image: url("{{ asset('images/llginM.png') }}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-card {
+            background: rgba(255, 255, 255, 0.95); /* Slight transparency */
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 450px;
+        }
+    </style>
+
     <div class="login-page-wrapper">
         <div class="login-card">
-            <h2 class="login-title">log In</h2>
+            <h2 class="login-title">Log In</h2>
 
             <form method="POST" action="{{ route('login') }}" class="login-form-container">
                 @csrf

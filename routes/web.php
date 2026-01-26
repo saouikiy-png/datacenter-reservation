@@ -4,7 +4,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ManagerController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ResourceController;
+use App\Models\ResourceCategory;
 
 // --- Routes publiques ---
 Route::get('/', function () {
@@ -32,10 +35,25 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
 });
 
-// --- Manager ---
+// Public Products Page (Teal Design)
+Route::get('/products', [ProductController::class, 'index'])->name('resources.index');
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+
+// AJAX
+Route::get('/resources/category/{id}', [ResourceController::class, 'getProducts'])
+    ->name('resources.byCategory');
+
 Route::middleware(['auth', 'isManager'])->group(function () {
     Route::get('/manager/dashboard', [ManagerController::class, 'index'])->name('manager.dashboard');
-    Route::get('/manager/resources', [ManagerController::class, 'resources'])->name('manager.resources');
+
+    
+    // Maintenance Routes
+    Route::post('/manager/maintenance', [ManagerController::class, 'storeMaintenance'])->name('manager.maintenance.store');
+    Route::patch('/manager/maintenance/{id}/complete', [ManagerController::class, 'markAsCompleted'])->name('manager.maintenance.complete');
+
+    // Reservation Routes
+    Route::patch('/manager/reservation/{id}/approve', [ManagerController::class, 'approveReservation'])->name('manager.reservation.approve');
+    Route::patch('/manager/reservation/{id}/reject', [ManagerController::class, 'rejectReservation'])->name('manager.reservation.reject');
 });
 
 

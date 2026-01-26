@@ -2,12 +2,12 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as Middleware;
 
-class VerifyCsrfToken
+class VerifyCsrfToken extends Middleware
 {
-  public function handle($request, Closure $next)
-  {
-    return $next($request);
-  }
+    protected $except = [
+        // exemple si nécessaire :
+        // 'api/*'
+    ];
 }
