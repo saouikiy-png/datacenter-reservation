@@ -4,21 +4,19 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ManagerController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\IncidentController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\ResourceController;
+use App\Models\ResourceCategory;
+
 
 // --- Routes publiques ---
 Route::get('/', function () {
-    return view('welcome');
-});
-
-
-// PROTECTED ROUTES (Requires Login)
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    // ... admin/manager routes
+    return view('welcome'); // Page accessible aux invités
 });
 
 // --- Auth routes (login/register/etc.) ---
@@ -42,11 +40,27 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
 });
 
-// --- Manager ---
+// Public Products Page (Teal Design)
+Route::get('/products', [ProductController::class, 'index'])->name('resources.index');
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+
+// AJAX
+Route::get('/resources/category/{id}', [ResourceController::class, 'getProducts'])
+    ->name('resources.byCategory');
+
 Route::middleware(['auth', 'isManager'])->group(function () {
     Route::get('/manager/dashboard', [ManagerController::class, 'index'])->name('manager.dashboard');
-    Route::get('/manager/resources', [ManagerController::class, 'resources'])->name('manager.resources');
+
+    
+    // Maintenance Routes
+    Route::post('/manager/maintenance', [ManagerController::class, 'storeMaintenance'])->name('manager.maintenance.store');
+    Route::patch('/manager/maintenance/{id}/complete', [ManagerController::class, 'markAsCompleted'])->name('manager.maintenance.complete');
+
+    // Reservation Routes
+    Route::patch('/manager/reservation/{id}/approve', [ManagerController::class, 'approveReservation'])->name('manager.reservation.approve');
+    Route::patch('/manager/reservation/{id}/reject', [ManagerController::class, 'rejectReservation'])->name('manager.reservation.reject');
 });
+
 
 // --- Notifications M ---
 Route::get('/notifications', [NotificationController::class, 'index']);
@@ -85,12 +99,35 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/admin/users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.users');
 });
 
-// Manager فقط
+// Manager 
 Route::middleware(['auth', 'isManager'])->group(function () {
     Route::get('/manager/resources', [ManagerController::class, 'resources'])->name('manager.resources');
 });
 
-// User فقط
+// User 
 Route::middleware(['auth'])->group(function () {
     Route::get('/user/profile', [UserController::class, 'profile'])->name('user.profile');
 });
+
+
+//ikram
+use App\Http\Controllers\ReservationController;
+
+// Page d'accueil (ou liste des ressources)
+Route::get('/', function () {
+    return view('welcome'); // Ou redirect vers page ressources si tu as une page dédiée
+});
+
+// Afficher le formulaire de réservation pour une ressource
+Route::get('/reservation/create', [ReservationController::class, 'create'])
+    ->name('reservation.create');
+
+// Enregistrer la réservation
+Route::post('/reservation/store', [ReservationController::class, 'store'])
+    ->name('reservation.store');
+//route au dashboard
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+

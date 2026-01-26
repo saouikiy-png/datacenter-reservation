@@ -3,11 +3,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Segoe UI', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family:  Lora 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   background-color: var(--bg-light);
   min-height: 100vh;
 }
@@ -82,7 +82,7 @@ body {
 
 .nav-links a.active {
   font-weight: bold;
-  border-bottom: 2px solid #333;
+  border-bottom: 2px solid #232b36;
 }
 
 /* --- Dropdown --- */
@@ -146,7 +146,7 @@ body {
 .mobile-menu button {
   padding: 10px 0;
   text-decoration: none;
-  color: #333;
+  color: #232b36;
   border-bottom: 1px solid #eee;
 }
 
@@ -166,9 +166,9 @@ body {
 
 /* --- SHARED COLORS & THEME --- */
 :root {
-  --primary-teal: #00bfa5;
-  --hover-teal: #02776b;
-  --bg-light: #f0fdfa;
+  --primary-teal: #3D2B6C;
+  --hover-teal: #744D83;
+  --bg-light: #e3dbe6;
   /* The light teal background  */
   --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
@@ -180,6 +180,10 @@ body {
   align-items: center;
   min-height: 80vh;
   background-color: var(--bg-light);
+  background-image: 
+    url('/images/llginM.png');
+  background-size: cover;
+  background-position: center;
 }
 
 .login-card {
@@ -200,6 +204,10 @@ body {
   align-items: center;
   min-height: 90vh;
   background-color: var(--bg-light);
+  background-image: 
+    url('/images/llginM.png');
+  background-size: cover;
+  background-position: center;
 }
 
 .register-card {
@@ -223,13 +231,14 @@ body {
   border-radius: 6px;
   font-size: 1rem;
   background-color: #fff;
+
 }
 
 .login-input:focus,
 .register-input:focus {
   border-color: var(--primary-teal);
   outline: none;
-  box-shadow: 0 0 5px rgba(0, 191, 165, 0.2);
+  box-shadow: 0 0 5px #7777DF(0, 191, 165, 0.2);
 }
 
 .login-submit-btn,
@@ -276,7 +285,7 @@ body {
 
   /* Background Image Logic */
   background-image: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.7)),
-    url('/images/data-center-bg.jpg');
+    url('/images/BK2.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -292,7 +301,7 @@ body {
 .home-content-overlay h1 {
   font-size: 2.5rem;
   font-weight: 800;
-  color: #333;
+  color: #232b36;
   margin-bottom: 30px;
   text-transform: uppercase;
 }
@@ -302,48 +311,22 @@ body {
   width: 100%;
   max-width: 600px;
   padding: 15px 25px;
-  border: 2px solid #333;
+  border: 2px solid #e9f3ff;
   border-radius: 8px;
   font-size: 1.1rem;
   background: white;
 }
 
-
-:root {
-    --primary-teal: #00bfa5;
-    --hover-teal: #02776b;
-    --bg-light: #f0fdfa;
-    --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+.card {
+    background:#fff;
+    padding:15px;
+    width:220px;
+    border-radius:8px;
+    box-shadow:0 2px 8px #11145b(0,0,0,0.1);
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
 }
 
-.admin-users {
-    font-family: sans-serif;
-}
 
-.users-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    box-shadow: var(--card-shadow);
-}
-
-.users-table th {
-    background: var(--primary-teal);
-    color: white;
-    padding: 12px;
-}
-
-.users-table td {
-    padding: 10px;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.status-active {
-    color: var(--primary-teal);
-    font-weight: bold;
-}
-
-.status-disabled {
-    color: #dc2626;
-    font-weight: bold;
-}
