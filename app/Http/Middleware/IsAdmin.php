@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+
 use Illuminate\Support\Facades\Auth;
 
 
@@ -13,11 +13,19 @@ class IsAdmin
 
     public function handle(Request $request, Closure $next)
     {
-
-        if (Auth::check() && Auth::user()->role_id === 3) {
-            return $next($request);
+        if (!Auth::check()) {
+           
+            abort(403, 'Accès refusé');
         }
 
-        abort(403, 'Accès refusé');
+        $role = Auth::user()->role->name;
+
+        if ($role !== 'admin') {
+           
+            abort(403, 'Accès refusé');
+        }
+
+        return $next($request);
     }
 }
+

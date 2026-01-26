@@ -25,7 +25,7 @@ Route::middleware(['auth'])->group(function () {
 require __DIR__ . '/auth.php';
 
 // --- Dashboard utilisateur (interne) ---
-Route::middleware(['auth', 'isUser'])->group(function () {
+Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
@@ -62,4 +62,35 @@ use App\Http\Controllers\Admin\UserController;
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/users', [UserController::class, 'index'])
         ->name('admin.users.index');
+});
+
+
+
+
+Route::middleware(['auth', 'isAdmin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+
+        Route::get('/dashboard', [AdminController::class, 'index'])
+            ->name('dashboard');
+
+        Route::get('/users', [UserController::class, 'index'])
+            ->name('users');
+});
+
+// Dashboard admin
+Route::middleware(['auth', 'isAdmin'])->group(function () {
+    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.users');
+});
+
+// Manager فقط
+Route::middleware(['auth', 'isManager'])->group(function () {
+    Route::get('/manager/resources', [ManagerController::class, 'resources'])->name('manager.resources');
+});
+
+// User فقط
+Route::middleware(['auth'])->group(function () {
+    Route::get('/user/profile', [UserController::class, 'profile'])->name('user.profile');
 });

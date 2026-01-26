@@ -30,7 +30,7 @@
                             {{ ucfirst($user->status) }}
                         </span>
                     </td>
-                    <td>{{ $user->created_at->format('d/m/Y') }}</td>
+                    <td>{{ optional($user->created_at)->format('d/m/Y') ?? '—' }}</td>
                 </tr>
             @endforeach
         </tbody>
