@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Resource;
 use App\Models\Maintenance;
 use App\Models\Reservation;
-use App\Models\ResourceCategory;
 use Illuminate\Http\Request;
+use App\Models\Log;
+use App\Models\Notification;
+use Illuminate\Support\Facades\Auth;
+
 
 class ManagerController extends Controller
 {
@@ -14,22 +17,42 @@ class ManagerController extends Controller
     {
         $totalResources = Resource::count();
         $underMaintenance = Resource::where('status', 'maintenance')->count();
-        $activeMaintenances = Maintenance::where('status', '!=', 'completed')->with('resource')->get();
-        
-        // Fetch pending reservations
-        $pendingReservations = Reservation::where('status', 'pending')->with(['user', 'resource'])->get();
-        
-        // Get all resources for the maintenance modal/list
+        $activeMaintenances = Maintenance::where('status', '!=', 'completed')
+            ->with('resource')
+            ->get();
+
+        $pendingReservations = Reservation::where('status', 'pending')
+            ->with(['user', 'resource'])
+            ->get();
+
         $resources = Resource::all();
 
-        return view('manager.dashboard', compact('totalResources', 'underMaintenance', 'activeMaintenances', 'resources', 'pendingReservations'));
+
+        return view('manager.dashboard', compact(
+            'totalResources',
+            'underMaintenance',
+            'activeMaintenances',
+            'resources',
+            'pendingReservations'
+        ));
     }
 
     public function approveReservation($id)
     {
         $reservation = Reservation::findOrFail($id);
         $reservation->update(['status' => 'approved']);
-        
+        Log::create([
+            'action' => 'Reservation Approved',
+            'user_id' => Auth::id(),
+            'description' => 'Reservation ID: ' . $reservation->id
+        ]);
+
+        Notification::create([
+            'user_id' => $reservation->user_id,
+            'message' => 'Your reservation has been approved',
+            'type' => 'reservation'
+        ]);
+
         return redirect()->back()->with('success', 'Reservation approved successfully.');
     }
 
@@ -37,11 +60,20 @@ class ManagerController extends Controller
     {
         $reservation = Reservation::findOrFail($id);
         $reservation->update(['status' => 'rejected']);
-        
+        Log::create([
+            'action' => 'Reservation Rejected',
+            'user_id' => Auth::id(),
+            'description' => 'Reservation ID: ' . $reservation->id
+        ]);
+
+        Notification::create([
+            'user_id' => $reservation->user_id,
+            'message' => 'Your reservation has been rejected',
+            'type' => 'reservation'
+        ]);
+
         return redirect()->back()->with('success', 'Reservation rejected.');
     }
-
-
 
     public function storeMaintenance(Request $request)
     {
@@ -58,6 +90,17 @@ class ManagerController extends Controller
             'reservation_date' => $request->reservation_date,
             'return_date' => $request->return_date,
             'status' => 'planned' // or 'ongoing' depending on need, default is planned
+        ]);
+        Log::create([
+            'action' => 'Maintenance Scheduled',
+            'user_id' => Auth::id(),
+            'description' => 'Maintenance created'
+        ]);
+
+        Notification::create([
+            'user_id' => Auth::id(),
+            'message' => 'Maintenance scheduled successfully',
+            'type' => 'maintenance'
         ]);
 
         // Optionally update resource status

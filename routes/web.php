@@ -1,86 +1,64 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\ProductController;
-use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\IncidentController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\ResourceController;
-use App\Models\ResourceCategory;
+use App\Http\Controllers\Admin\UserController;
 
-
-// --- Routes publiques ---
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
 Route::get('/', function () {
-    return view('welcome'); // Page accessible aux invités
+    return view('welcome');
 });
 
-// --- Auth routes (login/register/etc.) ---
 require __DIR__ . '/auth.php';
 
-// --- Dashboard utilisateur (interne) ---
-Route::middleware(['auth', 'isAdmin'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-});
-
-// --- Profil (tout utilisateur connecté) ---
+/*
+|--------------------------------------------------------------------------
+| Authenticated User Routes
+|--------------------------------------------------------------------------
+*/
 Route::middleware('auth')->group(function () {
+
+    // User dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
+
+    // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // User features
+    Route::get('/my-reservations', [ReservationController::class, 'myReservations'])
+        ->name('reservations.my');
+
+    Route::get('/notifications', [NotificationController::class, 'index'])
+        ->name('notifications.index');
+
+    Route::get('/reservation/create', [ReservationController::class, 'create'])
+        ->name('reservation.create');
+
+    Route::post('/reservation/store', [ReservationController::class, 'store'])
+        ->name('reservation.store');
 });
 
-// --- Admin ---
-Route::middleware(['auth', 'isAdmin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-    Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
-});
-
-// Public Products Page (Teal Design)
-Route::get('/products', [ProductController::class, 'index'])->name('resources.index');
-Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
-
-// AJAX
-Route::get('/resources/category/{id}', [ResourceController::class, 'getProducts'])
-    ->name('resources.byCategory');
-
-Route::middleware(['auth', 'isManager'])->group(function () {
-    Route::get('/manager/dashboard', [ManagerController::class, 'index'])->name('manager.dashboard');
-
-    
-    // Maintenance Routes
-    Route::post('/manager/maintenance', [ManagerController::class, 'storeMaintenance'])->name('manager.maintenance.store');
-    Route::patch('/manager/maintenance/{id}/complete', [ManagerController::class, 'markAsCompleted'])->name('manager.maintenance.complete');
-
-    // Reservation Routes
-    Route::patch('/manager/reservation/{id}/approve', [ManagerController::class, 'approveReservation'])->name('manager.reservation.approve');
-    Route::patch('/manager/reservation/{id}/reject', [ManagerController::class, 'rejectReservation'])->name('manager.reservation.reject');
-});
-
-
-// --- Notifications M ---
-Route::get('/notifications', [NotificationController::class, 'index']);
-
-// --- Incidents M ---
-Route::get('/incidents', [IncidentController::class, 'index']);
-
-// --- logs M ---
-Route::get('/logs', [LogController::class, 'index']);
-
-use App\Http\Controllers\Admin\UserController;
-
-Route::middleware(['auth'])->prefix('admin')->group(function () {
-    Route::get('/users', [UserController::class, 'index'])
-        ->name('admin.users.index');
-});
-
-
-
-
+/*
+|--------------------------------------------------------------------------
+| Admin Routes
+|--------------------------------------------------------------------------
+*/
 Route::middleware(['auth', 'isAdmin'])
     ->prefix('admin')
     ->name('admin.')
@@ -91,43 +69,47 @@ Route::middleware(['auth', 'isAdmin'])
 
         Route::get('/users', [UserController::class, 'index'])
             ->name('users');
-});
+    });
 
-// Dashboard admin
-Route::middleware(['auth', 'isAdmin'])->group(function () {
-    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-    Route::get('/admin/users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.users');
-});
+/*
+|--------------------------------------------------------------------------
+| Manager Routes
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'isManager'])
+    ->prefix('manager')
+    ->name('manager.')
+    ->group(function () {
 
-// Manager 
-Route::middleware(['auth', 'isManager'])->group(function () {
-    Route::get('/manager/resources', [ManagerController::class, 'resources'])->name('manager.resources');
-});
+        Route::get('/dashboard', [ManagerController::class, 'index'])
+            ->name('dashboard');
 
-// User 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/user/profile', [UserController::class, 'profile'])->name('user.profile');
-});
+        Route::get('/resources', [ManagerController::class, 'resources'])
+            ->name('resources');
 
+        Route::post('/maintenance', [ManagerController::class, 'storeMaintenance'])
+            ->name('maintenance.store');
 
-//ikram
-use App\Http\Controllers\ReservationController;
+        Route::patch('/maintenance/{id}/complete', [ManagerController::class, 'markAsCompleted'])
+            ->name('maintenance.complete');
 
-// Page d'accueil (ou liste des ressources)
-Route::get('/', function () {
-    return view('welcome'); // Ou redirect vers page ressources si tu as une page dédiée
-});
+        Route::patch('/reservation/{id}/approve', [ManagerController::class, 'approveReservation'])
+            ->name('reservation.approve');
 
-// Afficher le formulaire de réservation pour une ressource
-Route::get('/reservation/create', [ReservationController::class, 'create'])
-    ->name('reservation.create');
+        Route::patch('/reservation/{id}/reject', [ManagerController::class, 'rejectReservation'])
+            ->name('reservation.reject');
+    });
 
-// Enregistrer la réservation
-Route::post('/reservation/store', [ReservationController::class, 'store'])
-    ->name('reservation.store');
-//route au dashboard
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+/*
+|--------------------------------------------------------------------------
+| Other Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/products', [ProductController::class, 'index'])->name('resources.index');
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
+Route::get('/resources/category/{id}', [ResourceController::class, 'getProducts'])
+    ->name('resources.byCategory');
 
+Route::get('/incidents', [IncidentController::class, 'index']);
+Route::get('/logs', [LogController::class, 'index']);

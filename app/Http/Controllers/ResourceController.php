@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Resource;
 use App\Models\ResourceCategory;
+use App\Models\Log;
+use Illuminate\Support\Facades\Auth;
+
 
 class ResourceController extends Controller
 {
@@ -71,6 +74,11 @@ class ResourceController extends Controller
         ]);
 
         $resource->update($request->all());
+        Log::create([
+            'action' => 'Resource Updated',
+            'user_id' => Auth::id(),
+            'description' => 'Resource ID updated'
+        ]);
 
         return redirect()->route('resources.index')
             ->with('success', 'Resource updated successfully');

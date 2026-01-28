@@ -84,8 +84,8 @@
         margin: 0;
         color: #3D2B6C;
     }
+    
 
-    /* Section Styling */
     .dashboard-section {
         background: rgba(255, 255, 255, 0.95);
         border-radius: 8px;

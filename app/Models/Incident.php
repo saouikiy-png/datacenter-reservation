@@ -15,4 +15,9 @@ class Incident extends Model
         'description',
         'status'
     ];
+
+    // Status constants 
+    const STATUS_OPEN = 'open';
+    const STATUS_IN_PROGRESS = 'in_progress';
+    const STATUS_RESOLVED = 'resolved';
 }
