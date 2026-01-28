@@ -1,0 +1,97 @@
+/* Background */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: url('/images/background.jpg') no-repeat center center/cover;
+}
+
+/* Overlay */
+.reservation-page {
+    min-height: 100vh;
+    background-color: rgba(120, 86, 168, 0.85);
+    /* STUDIO #7856A8 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Card */
+.reservation-card {
+    background: #ffffff;
+    width: 420px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(35, 43, 54, 0.4);
+    /* BUNKER */
+}
+
+.reservation-card h2 {
+    text-align: center;
+    color: #3D2B6C;
+    /* MINSK */
+}
+
+.subtitle {
+    text-align: center;
+    color: #7777DF;
+    /* MEDIUM SLATE BLUE */
+    margin-bottom: 20px;
+}
+
+/* Form */
+label {
+    font-weight: 600;
+    margin-top: 15px;
+    display: block;
+}
+
+input,
+textarea {
+    width: 100%;
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #C4DEF8;
+    /* PATTERNS BLUE */
+    font-size: 14px;
+}
+
+textarea {
+    resize: none;
+    height: 80px;
+}
+
+/* Buttons */
+.actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+
+.btn-primary {
+    background: #3D2B6C;
+    color: white;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: #232B36;
+}
+
+.btn-secondary {
+    text-decoration: none;
+    color: #3D2B6C;
+    font-weight: 600;
+}
+
+/* Error */
+.error-box {
+    background: #ffe6e6;
+    color: #a10000;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
