@@ -1,3 +1,40 @@
+# Projet Universitaire
+
+## Instructions pour exécuter le projet
+
+1. Cloner le dépôt :
+```bash
+git clone <lien-du-repo>
+````
+
+2. Copier le fichier `.env.example` en `.env` :
+
+```bash
+cp .env.example .env
+```
+
+3. Installer les dépendances avec Composer :
+
+```bash
+composer install
+```
+
+4. Lancer les migrations et les seeders :
+
+```bash
+php artisan migrate --seed
+```
+
+5. Lancer le serveur Laravel :
+
+```bash
+php artisan serve
+```
+
+Le projet sera alors accessible sur `http://127.0.0.1:8000`.
+
+```
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
