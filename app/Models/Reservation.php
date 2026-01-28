@@ -11,9 +11,11 @@ class Reservation extends Model
     protected $fillable = [
         'user_id',
         'resource_id',
-        'start_date',
-        'end_date',
+        'reservation_date',
+        'return_date',
         'status',
+        'justification',
+        'manager_comment',
     ];
 
     public function user()
